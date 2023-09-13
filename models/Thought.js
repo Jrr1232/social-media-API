@@ -21,10 +21,39 @@ const thoughtSchema = new Schema(
 
         },
         reactions: {
+            reactionId:
+            {
+                type: Schema.Types.ObjectId,
+                default: Schema.Types.ObjectId,
+            },
+            reactionBody: {
+                type: String,
+                required: true,
+                maxLength: 280,
+
+            },
+            username: {
+                type: String,
+                required: true
+            },
+            createdAt: {
+                type: Date,
+                default: Date.now,
+
+
+            }
+
+
 
         }
 
-    }
+
+    }, {
+    toJSON: {
+        virtuals: true,
+    },
+    id: false,
+}
 );
 thoughtSchema
     .virtual('reactionCount')
@@ -37,6 +66,8 @@ thoughtSchema
     .get(function () {
         return this.createdAt.toISOString(); // Format createdAt as an ISO string
     });
+
+const Thought = model('thought', thoughtSchema);
 
 
 module.exports = User
