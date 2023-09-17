@@ -1,10 +1,10 @@
-const { Schema, model } = require('mongoose');
+const { Schema, mongoose, model } = require('mongoose');
 
 // Define a sub-document schema for reactions
 const reactionSchema = new Schema({
     reactionId: {
-        type: Schema.Types.ObjectId,
-        default: Schema.Types.ObjectId,
+        type: mongoose.Types.ObjectId,
+        default: mongoose.Types.ObjectId,
     },
     reactionBody: {
         type: String,
@@ -54,7 +54,6 @@ thoughtSchema.virtual('formattedCreatedAt')
     });
 
 const Thought = model('thought', thoughtSchema);
-const Reaction = model('reaction', reactionSchema);
 
 
 module.exports = Thought

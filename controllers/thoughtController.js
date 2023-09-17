@@ -1,4 +1,4 @@
-const { User, Thought, Reaction } = require('../models')
+const { User, Thought } = require('../models')
 module.exports = {
     async getThoughts(req, res) {
         try {
@@ -81,10 +81,10 @@ module.exports = {
     },
     async addReaction(req, res) {
         try {
-            const reaction = await Reaction.create(req.body);
+            reaction = req.body
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $push: { reactions: reaction._id } },
+                { $push: { reactions: reaction } },
                 { new: true }
             );
 
@@ -95,6 +95,29 @@ module.exports = {
             }
 
             res.json('Created the reaction 🎉');
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
+    async deleteReaction(req, res) {
+        try {
+            const reactionId = req.params.reactionId
+            const thought = req.params.thoughtId
+
+            await Thought.findByIdAndUpdate(
+                { _id: thought },
+                { $pull: { reactions: reactionId } },
+                { new: true }
+            );
+
+            if (!thought) {
+                return res
+                    .status(404)
+                    .json({ message: 'No thought found with that id' });
+            }
+
+            res.json('Deleted the reaction 🎉');
 
         } catch (err) {
             console.log(err)
