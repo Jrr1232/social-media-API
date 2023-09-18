@@ -6,7 +6,7 @@
 
 # Social Media Backend
 
-![image](https://github.com/Jrr1232/Tech-Blog/assets/71472570/df579117-9cff-4264-be85-59be2d46a5b2)
+![image](https://github.com/Jrr1232/social-media-startup-backend/assets/71472570/7cf9a5ba-fe2f-4e24-970e-fd7d0a343264)
 
 
 ## 🤔 Introduction
