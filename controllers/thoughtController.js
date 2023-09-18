@@ -102,16 +102,16 @@ module.exports = {
     },
     async deleteReaction(req, res) {
         try {
-            const reactionId = req.params.reactionId
-            const thought = req.params.thoughtId
-
+            const reactionId = req.params.reactionId;
+            const thoughtId = req.params.thoughtId;
+            console.log(reactionId, thoughtId)
             await Thought.findByIdAndUpdate(
-                { _id: thought },
-                { $pull: { reactions: reactionId } },
+                { _id: thoughtId },
+                { $pull: { reactions: { reactionId } } },
                 { new: true }
             );
 
-            if (!thought) {
+            if (!thoughtId) {
                 return res
                     .status(404)
                     .json({ message: 'No thought found with that id' });
@@ -120,7 +120,8 @@ module.exports = {
             res.json('Deleted the reaction 🎉');
 
         } catch (err) {
-            console.log(err)
+            console.error(err);
+            res.status(500).json({ message: 'Internal server error' });
         }
     }
 };
